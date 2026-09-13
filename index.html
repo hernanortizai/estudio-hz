@@ -348,6 +348,9 @@
         img.src = imgSrc;
         img.alt = data.title;
         img.loading = 'lazy';
+        img.onerror = function() {
+          this.style.display = 'none';
+        };
         gallery.appendChild(img);
       });
 
@@ -359,6 +362,7 @@
     };
 
     const closeProjectModal = () => {
+      modal.classList.remove('assets') || modal.classList.remove('active');
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
     };
