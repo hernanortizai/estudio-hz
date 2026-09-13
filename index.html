@@ -261,72 +261,58 @@
 
   <!-- JAVASCRIPT -->
   <script>
+    // Generador auxiliar automático de rutas de imágenes de 01 a 15 para carpetas organizadas
+    const generateImageArray = (folderName, count = 15) => {
+      const images = [];
+      for (let i = 1; i <= count; i++) {
+        const num = i < 10 ? `0${i}` : `${i}`;
+        images.push(`images/${folderName}/${num}.jpg`);
+      }
+      return images;
+    };
+
     const projectData = {
       project1: {
         title: "CS 85",
         meta: "Buenos Aires · Proyecto",
         service: "Proyecto",
         desc: "Desarrollo volumétrico enfocado en la pureza de líneas y la optimización de la luz natural. El proyecto resuelve la planta en torno a patios internos que conectan visualmente las áreas sociales con el exterior.",
-        images: ["images/proyecto1.jpg"]
+        images: generateImageArray("cs-85", 15) // Cambiará automáticamente a medida que agregues de 01.jpg a 15.jpg
       },
       project2: {
         title: "Chacras de la Reserva 156",
         meta: "Buenos Aires · Proyecto",
         service: "Proyecto",
         desc: "Propuesta arquitectónica resuelta en una sola planta dentro de un entorno suburbano abierto. Se priorizaron galerías expansivas y una fuerte conexión directa con el paisaje verde circundante.",
-        images: [
-          "images/chacras-de-la-reserva-156/01.jpg",
-          "images/chacras-de-la-reserva-156/02.jpg",
-          "images/chacras-de-la-reserva-156/03.jpg",
-          "images/chacras-de-la-reserva-156/04.jpg",
-          "images/chacras-de-la-reserva-156/05.jpg",
-          "images/chacras-de-la-reserva-156/06.jpg",
-          "images/chacras-de-la-reserva-156/07.jpg",
-          "images/chacras-de-la-reserva-156/08.jpg",
-          "images/chacras-de-la-reserva-156/09.jpg",
-          "images/chacras-de-la-reserva-156/10.jpg",
-          "images/chacras-de-la-reserva-156/11.jpg",
-          "images/chacras-de-la-reserva-156/12.jpg",
-          "images/chacras-de-la-reserva-156/13.jpg",
-          "images/chacras-de-la-reserva-156/14.jpg",
-          "images/chacras-de-la-reserva-156/15.jpg"
-        ]
+        images: generateImageArray("chacras-de-la-reserva-156", 15) // Ya preparado para las 15 imágenes
       },
       project3: {
         title: "Bali Ecoislandia",
         meta: "Escobar · Anteproyecto",
         service: "Anteproyecto",
         desc: "Anteproyecto residencial con criterios bioclimáticos e integración paisajística en Escobar. Uso de envolventes eficientes y ventilaciones cruzadas controladas.",
-        images: ["images/proyecto3.jpg"]
+        images: generateImageArray("bali-ecoislandia", 15)
       },
       project4: {
         title: "Lujan L4",
         meta: "Luján · Anteproyecto",
         service: "Anteproyecto",
         desc: "Diseño conceptual y legajo preliminar para vivienda moderna. Estructura sintética y volúmenes puros en relación directa con el entorno.",
-        images: ["images/proyecto4.jpg"]
+        images: generateImageArray("lujan-l4", 15)
       },
       project5: {
         title: "Barrio Alameda Lote 244",
         meta: "Buenos Aires · Reforma",
         service: "Reforma",
         desc: "Estudio integral de fachadas, reestructuración espacial y diseño interior para lote en barrio cerrado.",
-        images: ["images/proyecto5.jpg"]
+        images: generateImageArray("barrio-alameda-244", 15)
       },
       project6: {
         title: "Barrio Cazal",
         meta: "Buenos Aires - Escobar · Proyecto",
         service: "Proyecto",
         desc: "Desarrollo y visualización espacial de vivienda contemporánea en entorno natural de Escobar. Énfasis en la espacialidad y materialidad.",
-        images: [
-          "images/cazal-235/01.jpg",
-          "images/cazal-235/02.jpg",
-          "images/cazal-235/04.jpg",
-          "images/cazal-235/06.jpg",
-          "images/cazal-235/07.jpg",
-          "images/cazal-235/08.jpg",
-          "images/cazal-235/09.jpg"
-        ]
+        images: generateImageArray("cazal-235", 15)
       }
     };
 
@@ -343,11 +329,13 @@
       
       const gallery = document.getElementById('modalGallery');
       gallery.innerHTML = '';
+      
       data.images.forEach(imgSrc => {
         const img = document.createElement('img');
         img.src = imgSrc;
         img.alt = data.title;
         img.loading = 'lazy';
+        // Si la imagen todavía no fue subida/cargada a la carpeta, se oculta automáticamente sin romper el diseño
         img.onerror = function() {
           this.style.display = 'none';
         };
@@ -362,7 +350,6 @@
     };
 
     const closeProjectModal = () => {
-      modal.classList.remove('assets') || modal.classList.remove('active');
       modal.classList.remove('active');
       document.body.style.overflow = 'auto';
     };
